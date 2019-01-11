@@ -6,6 +6,7 @@ export interface Symbol {
     kind: SymbolKind;
 
     name: string | null;
+    comment?: string | null;
     display?: string | null;
     container?: string | null;
     range: Range;
