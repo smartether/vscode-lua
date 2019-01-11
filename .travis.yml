@@ -20,7 +20,7 @@ env:
 deploy:
 - provider: releases
   api_key:
-    secure: 541be87c877ffacb55eea43344df6ca2858c770d
+    secure: f03687d04e18689735a449de11d1db03f5d99b89
   file_glob: true
   file: "*.vsix"
   skip_cleanup: true
