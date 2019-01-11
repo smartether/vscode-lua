@@ -104,6 +104,8 @@ export class Analysis {
         let abortScopeTraversal = false;
         while (currentScope !== null) {
             for (const n of currentScope.nodes) {
+                // comment parse
+                const comment = (n as luaparse.Chunk).comments[0].value;
                 if (n.type === 'LocalStatement') {
                     // If the cursor scope has introduced a shadowing variable, don't continue traversing the scope
                     // parent tree.
@@ -123,7 +125,7 @@ export class Analysis {
                         .forEach(v => {
                             if (v.base.type === 'Identifier' && v.base.name === this.completionTableName) {
                                 this.addSymbolHelper(v.identifier, v.identifier.name, 'Variable',
-                                    undefined, this.completionTableName);
+                                    undefined, this.completionTableName, comment);
                             }
                         });
                 }
@@ -147,14 +149,14 @@ export class Analysis {
                                     case 'TableKey':
                                         if (field.key.type === 'StringLiteral') {
                                             this.addSymbolHelper(field, field.key.value, 'Variable', undefined,
-                                                this.completionTableName);
+                                                this.completionTableName, comment);
                                         }
                                         break;
 
                                     case 'TableKeyString':
                                         if (field.key.type === 'Identifier') {
                                             this.addSymbolHelper(field, field.key.name, 'Variable', undefined,
-                                                this.completionTableName);
+                                                this.completionTableName, comment);
                                         }
                                         break;
                                 }
@@ -216,10 +218,11 @@ export class Analysis {
     }
 
     private addSymbolHelper(node: luaparse.Node, name: string | null, kind: SymbolKind,
-        container?: string, display?: string) {
+        container?: string, display?: string, comment?:string) {
         this.symbols.push({
             kind,
             name,
+            comment,
             container,
             display,
             range: getNodeRange(node),
@@ -238,10 +241,10 @@ export class Analysis {
         }
     }
 
-    private addFunctionSymbols(node: luaparse.FunctionDeclaration, scopedQuery: boolean, rawNode:luaparse.Node) {
+    private addFunctionSymbols(node: luaparse.FunctionDeclaration, scopedQuery: boolean, rawNode: luaparse.Node) {
         const { name, container } = this.getIdentifierName(node.identifier);
-        let chunk = rawNode as luaparse.Chunk;
-        let commentValue = chunk.comments[0].value;
+        const chunk = rawNode as luaparse.Chunk;
+        const commentValue = chunk.comments[0].value;
 
         // filter<> specialization due to a bug in the current Typescript.
         // Should be fixed in 2.7 by https://github.com/Microsoft/TypeScript/pull/17600
@@ -252,7 +255,7 @@ export class Analysis {
         let display = 'function ';
         if (container) { display += container + ':'; }
         if (name) { display += name; }
-        if(commentValue) { display += commentValue;}
+        if (commentValue) { display += commentValue;}
 
         display += '(';
         display += parameters
