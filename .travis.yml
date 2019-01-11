@@ -25,11 +25,11 @@ deploy:
   file: "*.vsix"
   skip_cleanup: true
   on:
-    repo: trixnz/vscode-lua
+    repo: smartether/vscode-lua
     tags: true
 - provider: script
   script: npm run travis-deploy
   skip_cleanup: true
   on:
-    repo: trixnz/vscode-lua
+    repo: smartether/vscode-lua
     tags: true
