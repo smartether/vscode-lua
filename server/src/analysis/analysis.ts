@@ -218,7 +218,7 @@ export class Analysis {
     }
 
     private addSymbolHelper(node: luaparse.Node, name: string | null, kind: SymbolKind,
-        container?: string, display?: string, comment?:string) {
+        container?: string, display?: string, comment?: string) {
         this.symbols.push({
             kind,
             name,
@@ -255,7 +255,7 @@ export class Analysis {
         let display = 'function ';
         if (container) { display += container + ':'; }
         if (name) { display += name; }
-        if (commentValue) { display += commentValue;}
+        if (commentValue) { display += commentValue; }
 
         display += '(';
         display += parameters
