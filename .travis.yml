@@ -19,7 +19,7 @@ env:
 
 deploy:
 - provider: releases
-  api_key: b139a00b589a150c809f89d72ae7749cea591c95
+  api_key: $GITHUB_OAUTH_TOKEN
     #secure: b139a00b589a150c809f89d72ae7749cea591c95
   file_glob: true
   file: "*.vsix"
