@@ -246,8 +246,9 @@ export class Analysis {
         const chunk = rawNode as luaparse.Chunk;
         let commentValue = chunk.comments[0].raw;
         commentValue = 'test commemt';
-        const nameWithComment = name;
-        // nameWithComment += commentValue;
+
+        const nameWithComment : String = (name || '').concat(' ', commentValue);
+
         // filter<> specialization due to a bug in the current Typescript.
         // Should be fixed in 2.7 by https://github.com/Microsoft/TypeScript/pull/17600
         const parameters = node.parameters
