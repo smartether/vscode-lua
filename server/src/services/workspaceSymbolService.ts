@@ -11,9 +11,9 @@ export function buildWorkspaceSymbols(path: string, query: string, analysis: Ana
         // Populate the document's functions:
         if (symbol.kind === 'Function') {
             if (symbol.name === null) { continue; }
-            const commentedName = symbol.name.concat(' ').concat(symbol.comment || '');
+
             symbols.push({
-                name: commentedName,
+                name: symbol.name,
                 containerName: symbol.container || undefined,
                 kind: SymbolKind.Function,
                 location: Location.create(uri.toString(), symbol.range)
