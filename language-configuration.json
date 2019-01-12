@@ -5,7 +5,11 @@
         "blockComment": [
             "--[[",
             "]]"
-        ]
+        ],
+        "OtherComments": [
+            "--[[",
+            "]]--"
+        ],
     },
     "brackets": [
         [

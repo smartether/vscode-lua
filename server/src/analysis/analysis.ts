@@ -221,9 +221,11 @@ export class Analysis {
         let comment = '';
         if (chunk != null && chunk.comments != null) {
             if (chunk.comments.length > 0) {
-                chunk.comments.forEach(element => {
-                    comment = comment.concat(' ').concat(element.value).concat('\n');
-                });
+                comment = chunk.comments[0].value;
+                comment += chunk.comments[0].raw;
+                // chunk.comments.forEach(element => {
+                //     comment = comment.concat(' ').concat(element.value).concat('\n');
+                // });
             }
             else {
                 comment = '';
