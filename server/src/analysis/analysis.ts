@@ -220,6 +220,7 @@ export class Analysis {
         container?: string, display?: string) {
 
         let comment = '';
+
         if (node.type === 'FunctionDeclaration') {
             const fun = node as luaparse.FunctionDeclaration;
             const startLine = fun.loc.start.line;
@@ -235,9 +236,21 @@ export class Analysis {
             if (lines2.length > codeline.length) {
                 codeline = lines2;
             }
-            const commentRef = codeline.find((v, i) => v != null && i === startLine);
-            comment += commentRef;
-            comment += src;
+
+            if (codeline != null) {
+                const commentRef = codeline.find((v, i) => v != null && i === startLine);
+
+                try {
+                    comment += commentRef;
+                } catch (error) {
+
+                }
+                try {
+                    comment += src;
+                } catch (error) {
+
+                }
+            }
 
         }
 
