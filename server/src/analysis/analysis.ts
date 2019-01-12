@@ -223,11 +223,11 @@ export class Analysis {
         if (node.type === 'FunctionDeclaration') {
             const fun = node as luaparse.FunctionDeclaration;
             const startLine = fun.loc.start.line;
-            const token = luaparse.lex();
+            const src = luaparse.src.txt;
 
-            const lines = token.value.split('\n');
-            const lines1 = token.value.split('\r\n');
-            const lines2 = token.value.split('/\r/\n');
+            const lines = src.split('\n');
+            const lines1 = src.split('\r\n');
+            const lines2 = src.split('/\r/\n');
             let codeline = lines;
             if (lines1.length > codeline.length) {
                 codeline = lines1;
@@ -237,7 +237,8 @@ export class Analysis {
             }
             const commentRef = codeline.find((v, i) => v != null && i === startLine);
             comment += commentRef;
-            comment += token.value;
+            comment += src;
+
         }
 
         comment += this.chunks.length.toString();

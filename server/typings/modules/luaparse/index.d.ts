@@ -243,6 +243,12 @@ declare module 'luaparse' {
 	export function parse(code: Options | string, options?: Options | null): Chunk;
 	export function write(code: string): void;
 
+	export const src: Src;
+
+	interface Src {
+		txt: string;
+	}
+
 	interface Options {
 		wait?: boolean;
 		comments?: boolean;
