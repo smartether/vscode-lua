@@ -217,23 +217,23 @@ export class Analysis {
 
     private addSymbolHelper(node: luaparse.Node, name: string | null, kind: SymbolKind,
         container?: string, display?: string) {
-        const chunk = node as luaparse.Chunk;
-        let comment = '';
-        if (chunk != null && chunk.comments != null) {
-            if (chunk.comments.length > 0) {
-                comment = chunk.comments[0].value;
-                comment += chunk.comments[0].raw;
-                // chunk.comments.forEach(element => {
-                //     comment = comment.concat(' ').concat(element.value).concat('\n');
-                // });
-            }
-            else {
-                comment = '';
-            }
-        }
-        else {
-            comment = '';
-        }
+        // const chunk = node as luaparse.Chunk;
+        const comment = '';
+        // if (chunk != null && chunk.comments != null) {
+        //     if (chunk.comments.length > 0) {
+        //         comment = chunk.comments[0].value;
+        //         comment += chunk.comments[0].raw;
+        //         // chunk.comments.forEach(element => {
+        //         //     comment = comment.concat(' ').concat(element.value).concat('\n');
+        //         // });
+        //     }
+        //     else {
+        //         comment = '';
+        //     }
+        // }
+        // else {
+        //     comment = '';
+        // }
 
         this.symbols.push({
             kind,
