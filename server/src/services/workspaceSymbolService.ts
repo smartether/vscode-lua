@@ -13,7 +13,7 @@ export function buildWorkspaceSymbols(path: string, query: string, analysis: Ana
             if (symbol.name === null) { continue; }
 
             symbols.push({
-                name: symbol.name,
+                name: symbol.name + " " + symbol.comment,
                 containerName: symbol.container || undefined,
                 kind: SymbolKind.Function,
                 location: Location.create(uri.toString(), symbol.range)
