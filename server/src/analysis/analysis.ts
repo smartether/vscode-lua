@@ -247,7 +247,7 @@ export class Analysis {
         let commentValue = chunk.comments[0].raw;
         commentValue = 'test commemt';
 
-        const nameWithComment : String = (name || '').concat(' ', commentValue);
+        const nameWithComment: String = (name || '').concat(' ', commentValue);
 
         // filter<> specialization due to a bug in the current Typescript.
         // Should be fixed in 2.7 by https://github.com/Microsoft/TypeScript/pull/17600
