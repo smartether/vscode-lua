@@ -221,38 +221,38 @@ export class Analysis {
 
         let comment = '';
 
-        if (node.type === 'FunctionDeclaration') {
-            const fun = node as luaparse.FunctionDeclaration;
-            const startLine = fun.loc.start.line;
-            const src = luaparse.src.txt;
+        // if (node.type === 'FunctionDeclaration') {
+        //     const fun = node as luaparse.FunctionDeclaration;
+        //     const startLine = fun.loc.start.line;
+        //     const src = luaparse.src.txt;
 
-            const lines = src.split('\n');
-            const lines1 = src.split('\r\n');
-            const lines2 = src.split('/\r/\n');
-            let codeline = lines;
-            if (lines1.length > codeline.length) {
-                codeline = lines1;
-            }
-            if (lines2.length > codeline.length) {
-                codeline = lines2;
-            }
+        //     const lines = src.split('\n');
+        //     const lines1 = src.split('\r\n');
+        //     const lines2 = src.split('/\r/\n');
+        //     let codeline = lines;
+        //     if (lines1.length > codeline.length) {
+        //         codeline = lines1;
+        //     }
+        //     if (lines2.length > codeline.length) {
+        //         codeline = lines2;
+        //     }
 
-            if (codeline != null) {
-                const commentRef = codeline.find((v, i) => v != null && i === startLine);
+        //     if (codeline != null) {
+        //         const commentRef = codeline.find((v, i) => v != null && i === startLine);
 
-                try {
-                    comment += commentRef;
-                } catch (error) {
+        //         try {
+        //             comment += commentRef;
+        //         } catch (error) {
 
-                }
-                try {
-                    comment += src;
-                } catch (error) {
+        //         }
+        //         try {
+        //             comment += src;
+        //         } catch (error) {
 
-                }
-            }
+        //         }
+        //     }
 
-        }
+        // }
 
         comment += this.chunks.length.toString();
         this.symbols.push({
