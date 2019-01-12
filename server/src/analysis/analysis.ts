@@ -234,7 +234,11 @@ export class Analysis {
                 else {
                     comment = '';
                 }
-                comment = String(chunk.loc.end.line).concat(' ').concat(fun.loc.start.line.toString()).concat(' ').concat(this.chunks.length.toString());
+                comment += String(chunk.loc.end.line);
+                comment += ' ';
+                comment += fun.loc.start.line.toString();
+                comment += ' ';
+                comment += this.chunks.length.toString();
             }
             else {
                 comment = '';
