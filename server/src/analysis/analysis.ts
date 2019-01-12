@@ -224,7 +224,11 @@ export class Analysis {
         if (node.type === 'FunctionDeclaration') {
             const fun = node as luaparse.FunctionDeclaration;
             const startLine = fun.loc.start.line;
-            const src = luaparse.src.txt;
+            let src = '';
+            src += luaparse.src.txt;
+            if (src == null || src == undefined) {
+                src = '';
+            }
 
             const lines = src.split('\n');
             const lines1 = src.split('\r\n');
