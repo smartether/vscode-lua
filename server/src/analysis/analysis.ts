@@ -226,7 +226,7 @@ export class Analysis {
             const startLine = fun.loc.start.line;
             let src = '';
             src += luaparse.src.txt;
-            if (src == null || src == undefined) {
+            if (src == null || src === undefined) {
                 src = '';
             }
 
