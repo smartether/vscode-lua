@@ -219,7 +219,7 @@ export class Analysis {
         container?: string, display?: string) {
 
         let comment = '';
-        if (node.type === "Chunk") {
+        if (node.type === 'Chunk') {
             const chunk = node as luaparse.Chunk;
             if (chunk != null && chunk.comments != null) {
                 if (chunk.comments.length > 0) {
