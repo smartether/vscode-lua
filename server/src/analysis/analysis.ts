@@ -104,8 +104,6 @@ export class Analysis {
         let abortScopeTraversal = false;
         while (currentScope !== null) {
             for (const n of currentScope.nodes) {
-                // comment parse
-                const comment = (n as luaparse.Chunk).comments[0].value;
                 if (n.type === 'LocalStatement') {
                     // If the cursor scope has introduced a shadowing variable, don't continue traversing the scope
                     // parent tree.
@@ -125,7 +123,7 @@ export class Analysis {
                         .forEach(v => {
                             if (v.base.type === 'Identifier' && v.base.name === this.completionTableName) {
                                 this.addSymbolHelper(v.identifier, v.identifier.name, 'Variable',
-                                    undefined, this.completionTableName, comment);
+                                    undefined, this.completionTableName);
                             }
                         });
                 }
@@ -149,14 +147,14 @@ export class Analysis {
                                     case 'TableKey':
                                         if (field.key.type === 'StringLiteral') {
                                             this.addSymbolHelper(field, field.key.value, 'Variable', undefined,
-                                                this.completionTableName, comment);
+                                                this.completionTableName);
                                         }
                                         break;
 
                                     case 'TableKeyString':
                                         if (field.key.type === 'Identifier') {
                                             this.addSymbolHelper(field, field.key.name, 'Variable', undefined,
-                                                this.completionTableName, comment);
+                                                this.completionTableName);
                                         }
                                         break;
                                 }
@@ -194,7 +192,7 @@ export class Analysis {
                 case 'MemberExpression':
                     switch (identifier.base.type) {
                         case 'Identifier':
-                            return { name: identifier.identifier.name, container: identifier.base.name};
+                            return { name: identifier.identifier.name, container: identifier.base.name };
                         default:
                             return { name: identifier.identifier.name, container: null };
                     }
@@ -212,17 +210,16 @@ export class Analysis {
                 break;
 
             case 'FunctionDeclaration':
-                this.addFunctionSymbols(node, scopedQuery, node);
+                this.addFunctionSymbols(node, scopedQuery);
                 break;
         }
     }
 
     private addSymbolHelper(node: luaparse.Node, name: string | null, kind: SymbolKind,
-        container?: string, display?: string, comment?: string) {
+        container?: string, display?: string) {
         this.symbols.push({
             kind,
             name,
-            comment,
             container,
             display,
             range: getNodeRange(node),
@@ -241,14 +238,8 @@ export class Analysis {
         }
     }
 
-    private addFunctionSymbols(node: luaparse.FunctionDeclaration, scopedQuery: boolean, rawNode: luaparse.Node) {
+    private addFunctionSymbols(node: luaparse.FunctionDeclaration, scopedQuery: boolean) {
         const { name, container } = this.getIdentifierName(node.identifier);
-        const chunk = rawNode as luaparse.Chunk;
-        let commentValue = chunk.comments[0].raw.toString();
-        commentValue = 'test commemt';
-
-        const nameWithComment = (name || '').concat(' ').concat(commentValue);
-
         // filter<> specialization due to a bug in the current Typescript.
         // Should be fixed in 2.7 by https://github.com/Microsoft/TypeScript/pull/17600
         const parameters = node.parameters
@@ -258,7 +249,6 @@ export class Analysis {
         let display = 'function ';
         if (container) { display += container + ':'; }
         if (name) { display += name; }
-
         display += '(';
         display += parameters
             .map((param: luaparse.Identifier) => param.name)
@@ -266,7 +256,7 @@ export class Analysis {
 
         display += ')';
 
-        this.addSymbolHelper(node, name, 'Function', container || undefined, display, nameWithComment);
+        this.addSymbolHelper(node, name, 'Function', container || undefined, display);
 
         if (scopedQuery) {
             parameters
