@@ -243,7 +243,7 @@ export class Analysis {
 
     private addFunctionSymbols(node: luaparse.FunctionDeclaration, scopedQuery: boolean, rawNode: luaparse.Node) {
         const { name, container } = this.getIdentifierName(node.identifier);
-        const chunk = rawNode as luaparse.Chunk;
+        // const chunk = rawNode as luaparse.Chunk;
         const commentValue = 'test commemt'; // chunk.comments[0].raw;
 
         // filter<> specialization due to a bug in the current Typescript.
