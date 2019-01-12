@@ -222,7 +222,7 @@ export class Analysis {
         if (chunk != null && chunk.comments != null) {
             if (chunk.comments.length > 0) {
                 chunk.comments.forEach(element => {
-                    comment = comment.concat(' ').concat(element.value).concat('\n');
+                    comment = comment.concat(' ').concat(element.raw).concat('\n');
                 });
             }
             else {
