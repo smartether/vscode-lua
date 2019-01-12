@@ -6,7 +6,7 @@ import { getNodeRange } from '../utils';
 
 export class Analysis {
     public symbols: Symbol[] = [];
-
+    private chunks: luaparse.Chunk[] = [];
     private scopeStack: Scope[] = [];
     private globalScope: Scope | null = null;
     private cursorScope: Scope | null = null;
@@ -33,6 +33,7 @@ export class Analysis {
             onCreateNode: (node) => {
                 // The chunk is meaningless to us, so ignore it.
                 if (node.type === 'Chunk') {
+                    this.chunks.push(node);
                     return;
                 }
 
@@ -219,8 +220,9 @@ export class Analysis {
         container?: string, display?: string) {
 
         let comment = '';
-        if (node.type === 'Chunk') {
-            const chunk = node as luaparse.Chunk;
+        if (node.type === 'FunctionDeclaration') {
+            const fun = node as luaparse.FunctionDeclaration;
+            const chunk = this.chunks.find((cell) => cell.loc.end.line == (fun.loc.start.line - 1));
             if (chunk != null && chunk.comments != null) {
                 if (chunk.comments.length > 0) {
                     comment = chunk.comments[0].value;
