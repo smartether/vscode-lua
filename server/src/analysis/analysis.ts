@@ -220,7 +220,14 @@ export class Analysis {
         const chunk = node as luaparse.Chunk;
         let comment = '';
         if (chunk != null) {
-            comment = 'comment';
+            if(chunk.comments.length > 0){
+                chunk.comments.forEach(element => {
+                    comment = comment.concat(' ').concat(element.value).concat('\n');
+                });
+            }
+            else{
+                comment = '';
+            }
         }
         else {
             comment = 'chunk is null';
