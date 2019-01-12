@@ -17,7 +17,7 @@ export class Analysis {
             locations: true,
             scope: true,
             wait: true,
-            comments: false,
+            comments: true,
             onCreateScope: () => {
                 const newScope = new Scope();
 
