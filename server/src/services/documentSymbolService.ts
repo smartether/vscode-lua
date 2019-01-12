@@ -8,7 +8,7 @@ export function buildDocumentSymbols(uri: string, analysis: Analysis): SymbolInf
         // Populate the document's functions:
         if (symbol.kind === 'Function') {
             if (symbol.name === null) { continue; }
-            const nameWithComment = symbol.name.concat(' ').concat(symbol.comment || ' no comment ');
+            const nameWithComment = symbol.name.concat(' ').concat(symbol.comment);
             symbols.push({
                 name: nameWithComment,
                 containerName: symbol.container || undefined,
