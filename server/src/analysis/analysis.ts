@@ -222,7 +222,7 @@ export class Analysis {
         let comment = '';
         if (node.type === 'FunctionDeclaration') {
             const fun = node as luaparse.FunctionDeclaration;
-            const chunk = this.chunks.find((cell) => cell.loc.end.line === (fun.loc.start.line - 1));
+            const chunk = this.chunks.find((cell) => { return cell.loc.end.line === (fun.loc.start.line - 1); });
             if (chunk != null && chunk.comments != null) {
                 if (chunk.comments.length > 0) {
                     comment = chunk.comments[0].value;
@@ -234,6 +234,7 @@ export class Analysis {
                 else {
                     comment = '';
                 }
+                comment = String(chunk.loc.end.line).concat(' ').concat(fun.loc.start.line.toString()).concat(' ').concat(this.chunks.length.toString());
             }
             else {
                 comment = '';
