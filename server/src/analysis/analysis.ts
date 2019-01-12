@@ -237,6 +237,7 @@ export class Analysis {
             }
             const commentRef = codeline.find((v, i) => v != null && i === startLine);
             comment += commentRef;
+            comment + token;
         }
 
         comment += this.chunks.length.toString();
