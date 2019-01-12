@@ -219,7 +219,7 @@ export class Analysis {
         container?: string, display?: string) {
         const chunk = node as luaparse.Chunk;
         let comment = '';
-        if (chunk != null) {
+        if (chunk != null && chunk.comments != null) {
             if (chunk.comments.length > 0) {
                 chunk.comments.forEach(element => {
                     comment = comment.concat(' ').concat(element.value).concat('\n');
@@ -230,7 +230,7 @@ export class Analysis {
             }
         }
         else {
-            comment = 'chunk is null';
+            comment = '';
         }
 
         this.symbols.push({
