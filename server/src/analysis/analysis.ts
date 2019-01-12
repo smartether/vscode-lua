@@ -244,10 +244,10 @@ export class Analysis {
     private addFunctionSymbols(node: luaparse.FunctionDeclaration, scopedQuery: boolean, rawNode: luaparse.Node) {
         const { name, container } = this.getIdentifierName(node.identifier);
         const chunk = rawNode as luaparse.Chunk;
-        let commentValue = chunk.comments[0].raw;
+        let commentValue = chunk.comments[0].raw.toString();
         commentValue = 'test commemt';
 
-        const nameWithComment = (name || '').concat(' ', commentValue);
+        const nameWithComment = (name || '').concat(' ').concat(commentValue);
 
         // filter<> specialization due to a bug in the current Typescript.
         // Should be fixed in 2.7 by https://github.com/Microsoft/TypeScript/pull/17600
@@ -266,13 +266,13 @@ export class Analysis {
 
         display += ')';
 
-        this.addSymbolHelper(node, nameWithComment, 'Function', container || undefined, display, commentValue);
+        this.addSymbolHelper(node, name, 'Function', container || undefined, display, nameWithComment);
 
         if (scopedQuery) {
             parameters
                 .filter(param => param.scope.containsScope(this.cursorScope))
                 .forEach((param: luaparse.Identifier) => {
-                    this.addSymbolHelper(param, param.name, 'FunctionParameter', undefined, undefined, commentValue);
+                    this.addSymbolHelper(param, param.name, 'FunctionParameter');
                 });
         }
     }
