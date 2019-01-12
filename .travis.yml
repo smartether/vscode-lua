@@ -23,9 +23,9 @@ deploy:
   on:
     repo: smartether/vscode-lua
     tags: true
-- provider: script
-  script: npm run travis-deploy
-  skip_cleanup: true
-  on:
-    repo: smartether/vscode-lua
-    tags: true
+# - provider: script
+#   script: npm run travis-deploy
+#   skip_cleanup: true
+#   on:
+#     repo: smartether/vscode-lua
+#     tags: true
