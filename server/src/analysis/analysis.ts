@@ -256,7 +256,6 @@ export class Analysis {
         let display = 'function ';
         if (container) { display += container + ':'; }
         if (name) { display += name; }
-        if (commentValue) { display += commentValue; }
 
         display += '(';
         display += parameters
@@ -265,13 +264,13 @@ export class Analysis {
 
         display += ')';
 
-        this.addSymbolHelper(node, name, 'Function', container || undefined, display);
+        this.addSymbolHelper(node, name, 'Function', container || undefined, display, commentValue);
 
         if (scopedQuery) {
             parameters
                 .filter(param => param.scope.containsScope(this.cursorScope))
                 .forEach((param: luaparse.Identifier) => {
-                    this.addSymbolHelper(param, param.name, 'FunctionParameter');
+                    this.addSymbolHelper(param, param.name, 'FunctionParameter', undefined, undefined, commentValue);
                 });
         }
     }
