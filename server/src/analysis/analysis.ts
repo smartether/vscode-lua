@@ -217,9 +217,19 @@ export class Analysis {
 
     private addSymbolHelper(node: luaparse.Node, name: string | null, kind: SymbolKind,
         container?: string, display?: string) {
+        const chunk = node as luaparse.Chunk;
+        let comment = '';
+        if (chunk != null) {
+            comment = 'comment';
+        }
+        else {
+            comment = 'chunk is null';
+        }
+
         this.symbols.push({
             kind,
             name,
+            comment,
             container,
             display,
             range: getNodeRange(node),
