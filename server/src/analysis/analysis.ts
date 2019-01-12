@@ -238,14 +238,13 @@ export class Analysis {
                 comment += ' ';
                 comment += fun.loc.start.line.toString();
                 comment += ' ';
-                comment += this.chunks.length.toString();
             }
             else {
                 comment = '';
             }
 
         }
-
+        comment += this.chunks.length.toString();
         this.symbols.push({
             kind,
             name,
