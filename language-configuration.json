@@ -1,7 +1,7 @@
 {
     // Inherited from https://github.com/Microsoft/vscode/blob/a70d7cc9aebb782d6d3dbf7faa3c092081f44b58/extensions/lua/language-configuration.json
     "comments": {
-        "lineComment": "--",
+        "lineComment": "(^--[\r\n]+)",
         "blockComment": [
             "--[[",
             "]]"
