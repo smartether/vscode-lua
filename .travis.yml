@@ -13,14 +13,14 @@ script:
 after_success:
 - npm run package
 
-env:
-  global:
-    secure: QAM0xjbrfX2M2hEFpUR95vJM5o9Q9CkrkYPa2zNbKqRIqXFQ+++LHBTEj3uVCnewqN92Od4lyaYlmUOuSQhAPenp6FbU7sIwU556mDYHfkJeFYw6QqheiKPpe89Zdt6/TgB/v/Muzchl+ts2NI/JE1Lh7jgTn7jlQaGWkj/e5MVUQmYACu57Vd7BXA9m8PqZPhUQuHL0DnjeT/QeI4hS0o1H5Q1/14VRCJ120679v+EAACrwxVQ1ZUtMhja7r0q1CzotLtrzSRbgJ5laMiOkXtmYMqawiVwr1d098vUxgS3d27geH/oa1W/tDNKRDNzae0/4aQxokdM0ZXIJC/Ts2nGaD6Z6iqWDq2l279d/kkAOKZ4u829G4oO22V1bOxbFpqN08a3yFqpGSZvsP/Jukn1mUj325q+haC7CWqc29ycsgqB54FHVmS6mGB3rbUSXdH5eCzPylG/XXYuNCIQOGcDmH3K4CsXK9mhrBJV/wZhKPKn8HYtWC8a+2eN9B7wxxz3CRDPi7vmRtYF75x0mD7GBQhw1fwBXZVfIhhH1DJGZfl5pz10Iza+Mfgc3ga0CQjO+705DHZjIRD3RZb+9/dOcrXaOVMHUb4SFj3/ElbEpLzqRy0LuaEX5kCAOSQouNb2N5drW47U36C4gLgZnA8hwL0AcctoEg3d5oKA3mFQ=
+# env:
+#   global:
+#     secure: QAM0xjbrfX2M2hEFpUR95vJM5o9Q9CkrkYPa2zNbKqRIqXFQ+++LHBTEj3uVCnewqN92Od4lyaYlmUOuSQhAPenp6FbU7sIwU556mDYHfkJeFYw6QqheiKPpe89Zdt6/TgB/v/Muzchl+ts2NI/JE1Lh7jgTn7jlQaGWkj/e5MVUQmYACu57Vd7BXA9m8PqZPhUQuHL0DnjeT/QeI4hS0o1H5Q1/14VRCJ120679v+EAACrwxVQ1ZUtMhja7r0q1CzotLtrzSRbgJ5laMiOkXtmYMqawiVwr1d098vUxgS3d27geH/oa1W/tDNKRDNzae0/4aQxokdM0ZXIJC/Ts2nGaD6Z6iqWDq2l279d/kkAOKZ4u829G4oO22V1bOxbFpqN08a3yFqpGSZvsP/Jukn1mUj325q+haC7CWqc29ycsgqB54FHVmS6mGB3rbUSXdH5eCzPylG/XXYuNCIQOGcDmH3K4CsXK9mhrBJV/wZhKPKn8HYtWC8a+2eN9B7wxxz3CRDPi7vmRtYF75x0mD7GBQhw1fwBXZVfIhhH1DJGZfl5pz10Iza+Mfgc3ga0CQjO+705DHZjIRD3RZb+9/dOcrXaOVMHUb4SFj3/ElbEpLzqRy0LuaEX5kCAOSQouNb2N5drW47U36C4gLgZnA8hwL0AcctoEg3d5oKA3mFQ=
 
 deploy:
 - provider: releases
-  api_key:
-    secure: $GitHub_TOKEN
+  api_key: $GitHub_TOKEN
+#    secure: $GitHub_TOKEN
   file_glob: true
   file: "*.vsix"
   skip_cleanup: true
