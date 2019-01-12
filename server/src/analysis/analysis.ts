@@ -224,8 +224,18 @@ export class Analysis {
             const fun = node as luaparse.FunctionDeclaration;
             const startLine = fun.loc.start.line;
             const token = luaparse.lex();
-            const lines = token.value.split('\r\n');
-            const commentRef = lines.find((v, i) => v != null && i === startLine);
+
+            const lines = token.value.split('\n');
+            const lines1 = token.value.split('\r\n');
+            const lines2 = token.value.split('/\r/\n');
+            let codeline = lines;
+            if (lines1.length > codeline.length) {
+                codeline = lines1;
+            }
+            if (lines2.length > codeline.length) {
+                codeline = lines2;
+            }
+            const commentRef = codeline.find((v, i) => v != null && i === startLine);
             comment += commentRef;
         }
 
