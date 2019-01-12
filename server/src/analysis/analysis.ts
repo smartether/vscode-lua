@@ -220,12 +220,12 @@ export class Analysis {
         const chunk = node as luaparse.Chunk;
         let comment = '';
         if (chunk != null) {
-            if(chunk.comments.length > 0){
+            if (chunk.comments.length > 0) {
                 chunk.comments.forEach(element => {
                     comment = comment.concat(' ').concat(element.value).concat('\n');
                 });
             }
-            else{
+            else {
                 comment = '';
             }
         }
