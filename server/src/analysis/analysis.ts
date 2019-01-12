@@ -222,28 +222,13 @@ export class Analysis {
         let comment = '';
         if (node.type === 'FunctionDeclaration') {
             const fun = node as luaparse.FunctionDeclaration;
-            const chunk = this.chunks.find((cell) => { return cell.loc.end.line === (fun.loc.start.line - 1); });
-            if (chunk != null && chunk.comments != null) {
-                if (chunk.comments.length > 0) {
-                    comment = chunk.comments[0].value;
-                    comment += chunk.comments[0].raw;
-                    // chunk.comments.forEach(element => {
-                    //     comment = comment.concat(' ').concat(element.value).concat('\n');
-                    // });
-                }
-                else {
-                    comment = '';
-                }
-                comment += String(chunk.loc.end.line);
-                comment += ' ';
-                comment += fun.loc.start.line.toString();
-                comment += ' ';
-            }
-            else {
-                comment = '';
-            }
-
+            const startLine = fun.loc.start.line;
+            const token = luaparse.lex();
+            const lines = token.value.split('\r\n');
+            const commentRef = lines.find((v, i) => v != null && i === startLine);
+            comment += commentRef;
         }
+
         comment += this.chunks.length.toString();
         this.symbols.push({
             kind,
