@@ -246,7 +246,7 @@ declare module 'luaparse' {
 	export const src: Src;
 
 	interface Src {
-		txt: string;
+		txt?: string;
 	}
 
 	interface Options {
