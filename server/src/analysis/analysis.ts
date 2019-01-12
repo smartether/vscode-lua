@@ -259,7 +259,9 @@ export class Analysis {
         // }
 
         // comment += this.chunks.length.toString();
-        comment += luaparse.src.txt;
+        if (luaparse.defaultOptions != null && luaparse.defaultOptions.txt != null) {
+            comment += luaparse.defaultOptions.txt;
+        }
         this.symbols.push({
             kind,
             name,
