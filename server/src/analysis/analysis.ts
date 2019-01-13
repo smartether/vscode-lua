@@ -6,7 +6,7 @@ import { getNodeRange } from '../utils';
 
 export class Analysis {
     public symbols: Symbol[] = [];
-
+    private chunks: luaparse.Chunk[] = [];
     private scopeStack: Scope[] = [];
     private globalScope: Scope | null = null;
     private cursorScope: Scope | null = null;
@@ -34,6 +34,7 @@ export class Analysis {
             onCreateNode: (node) => {
                 // The chunk is meaningless to us, so ignore it.
                 if (node.type === 'Chunk') {
+                    this.chunks.push(node);
                     return;
                 }
 
@@ -105,8 +106,6 @@ export class Analysis {
         let abortScopeTraversal = false;
         while (currentScope !== null) {
             for (const n of currentScope.nodes) {
-                // comment parse
-                const comment = (n as luaparse.Chunk).comments[0].value;
                 if (n.type === 'LocalStatement') {
                     // If the cursor scope has introduced a shadowing variable, don't continue traversing the scope
                     // parent tree.
@@ -126,7 +125,7 @@ export class Analysis {
                         .forEach(v => {
                             if (v.base.type === 'Identifier' && v.base.name === this.completionTableName) {
                                 this.addSymbolHelper(v.identifier, v.identifier.name, 'Variable',
-                                    undefined, this.completionTableName, comment);
+                                    undefined, this.completionTableName);
                             }
                         });
                 }
@@ -150,14 +149,14 @@ export class Analysis {
                                     case 'TableKey':
                                         if (field.key.type === 'StringLiteral') {
                                             this.addSymbolHelper(field, field.key.value, 'Variable', undefined,
-                                                this.completionTableName, comment);
+                                                this.completionTableName);
                                         }
                                         break;
 
                                     case 'TableKeyString':
                                         if (field.key.type === 'Identifier') {
                                             this.addSymbolHelper(field, field.key.name, 'Variable', undefined,
-                                                this.completionTableName, comment);
+                                                this.completionTableName);
                                         }
                                         break;
                                 }
@@ -195,7 +194,7 @@ export class Analysis {
                 case 'MemberExpression':
                     switch (identifier.base.type) {
                         case 'Identifier':
-                            return { name: identifier.identifier.name, container: identifier.base.name};
+                            return { name: identifier.identifier.name, container: identifier.base.name };
                         default:
                             return { name: identifier.identifier.name, container: null };
                     }
@@ -213,13 +212,57 @@ export class Analysis {
                 break;
 
             case 'FunctionDeclaration':
-                this.addFunctionSymbols(node, scopedQuery, node);
+                this.addFunctionSymbols(node, scopedQuery);
                 break;
         }
     }
 
     private addSymbolHelper(node: luaparse.Node, name: string | null, kind: SymbolKind,
-        container?: string, display?: string, comment?: string) {
+        container?: string, display?: string) {
+
+        let comment = '';
+
+        // if (node.type === 'FunctionDeclaration') {
+        //     const fun = node as luaparse.FunctionDeclaration;
+        //     const startLine = fun.loc.start.line;
+        //     let src = '';
+        //     src += luaparse.src.txt;
+        //     if (src == null || src === undefined) {
+        //         src = '';
+        //     }
+
+        //     const lines = src.split('\n');
+        //     const lines1 = src.split('\r\n');
+        //     const lines2 = src.split('/\r/\n');
+        //     let codeline = lines;
+        //     if (lines1.length > codeline.length) {
+        //         codeline = lines1;
+        //     }
+        //     if (lines2.length > codeline.length) {
+        //         codeline = lines2;
+        //     }
+
+        //     if (codeline != null) {
+        //         const commentRef = codeline.find((v, i) => v != null && i === startLine);
+
+        //         try {
+        //             comment += commentRef;
+        //         } catch (error) {
+
+        //         }
+        //         try {
+        //             comment += src;
+        //         } catch (error) {
+
+        //         }
+        //     }
+
+        // }
+
+        // comment += this.chunks.length.toString();
+        if (luaparse.defaultOptions != null && luaparse.defaultOptions.txt != null) {
+            comment += luaparse.defaultOptions.txt;
+        }
         this.symbols.push({
             kind,
             name,
@@ -242,11 +285,8 @@ export class Analysis {
         }
     }
 
-    private addFunctionSymbols(node: luaparse.FunctionDeclaration, scopedQuery: boolean, rawNode: luaparse.Node) {
+    private addFunctionSymbols(node: luaparse.FunctionDeclaration, scopedQuery: boolean) {
         const { name, container } = this.getIdentifierName(node.identifier);
-        const chunk = rawNode as luaparse.Chunk;
-        const commentValue = chunk.comments[0].value;
-
         // filter<> specialization due to a bug in the current Typescript.
         // Should be fixed in 2.7 by https://github.com/Microsoft/TypeScript/pull/17600
         const parameters = node.parameters
@@ -256,8 +296,6 @@ export class Analysis {
         let display = 'function ';
         if (container) { display += container + ':'; }
         if (name) { display += name; }
-        if (commentValue) { display += commentValue; }
-
         display += '(';
         display += parameters
             .map((param: luaparse.Identifier) => param.name)
