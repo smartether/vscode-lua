@@ -18,6 +18,7 @@ export class Analysis {
             scope: true,
             wait: true,
             comments: false,
+            src: '',
             onCreateScope: () => {
                 const newScope = new Scope();
 
