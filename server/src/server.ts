@@ -151,7 +151,7 @@ class ServiceDispatcher {
 
         const documentText = document.getText();
 
-        luaparse.defaultOptions.src = String(documentText);
+        // luaparse.defaultOptions.src = String(documentText);
 
 
         const { prefixStartPosition, suffixEndPosition } = getCursorWordBoundry(documentText,
@@ -300,6 +300,8 @@ class ServiceDispatcher {
     private async parseAndLintDocument(document: TextDocument) {
         const documentUri = document.uri;
         const documentText = document.getText();
+
+        luaparse.defaultOptions.src = documentText;
 
         const parsedUri = Uri.parse(documentUri);
         // Don't lint the diff view. Fixes #22.
