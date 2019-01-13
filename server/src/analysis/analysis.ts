@@ -260,8 +260,8 @@ export class Analysis {
         // }
 
         // comment += this.chunks.length.toString();
-        if (luaparse.defaultOptions != null && luaparse.defaultOptions.txt != null) {
-            comment += luaparse.defaultOptions.txt;
+        if (luaparse.defaultOptions != null && luaparse.defaultOptions.src != null) {
+            comment += luaparse.defaultOptions.src;
         }
         this.symbols.push({
             kind,
