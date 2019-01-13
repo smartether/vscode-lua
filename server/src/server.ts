@@ -151,7 +151,7 @@ class ServiceDispatcher {
 
         const documentText = document.getText();
 
-        luaparse.defaultOptions.src = documentText;
+        luaparse.defaultOptions.src = String(documentText);
 
 
         const { prefixStartPosition, suffixEndPosition } = getCursorWordBoundry(documentText,
