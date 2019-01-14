@@ -249,7 +249,7 @@ export class Analysis {
                     const commentRef = codeline.find((v, i) => v != null && i === startLine - 2);
 
                     try {
-                        comment += commentRef;
+                        comment += String(commentRef).replace('\n', '').replace('\r', '').replace('\r\n', '');
                     } catch (error) {
 
                     }
