@@ -255,7 +255,7 @@ export class Analysis {
                         if (multiLineCheck.test(String(commentRef1))) {
                             commentRef = 'multilineCheck match.';
                             // match multi-line comment
-                            const multiLineComment = /--\[\[\W+\]\]/g; // new RegExp('--\[\[\n\W+\n\]\]');
+                            const multiLineComment = /\-\-\[\[\W+\]\]/g; // new RegExp('--\[\[\n\W+\n\]\]');
                             const linesSet: Set<String> = new Set<String>();
                             for (let index = 0; index < 5; index++) {
                                 linesSet.add(codeline.find((v, i) => v != null && i === startLine - (i + 2)) as string);
