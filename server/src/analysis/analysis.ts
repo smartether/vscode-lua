@@ -6,7 +6,6 @@ import { getNodeRange } from '../utils';
 
 export class Analysis {
     public symbols: Symbol[] = [];
-    private chunks: luaparse.Chunk[] = [];
     private scopeStack: Scope[] = [];
     private globalScope: Scope | null = null;
     private cursorScope: Scope | null = null;
@@ -35,7 +34,6 @@ export class Analysis {
             onCreateNode: (node) => {
                 // The chunk is meaningless to us, so ignore it.
                 if (node.type === 'Chunk') {
-                    this.chunks.push(node);
                     return;
                 }
 
@@ -246,10 +244,42 @@ export class Analysis {
                 }
 
                 if (codeline != null) {
-                    const commentRef = codeline.find((v, i) => v != null && i === startLine - 2);
-
+                    //neighbor line 1
+                    const commentRef1 = codeline.find((v, i) => v != null && i === startLine - 2);
+                    //neighbor line 2
+                    let commentRef = '';
                     try {
+
+                        const multiLineCheck = new RegExp('\]\]\n');
+
+                        if (multiLineCheck.test(String(commentRef1))) {
+                            // match multi-line comment
+                            const multiLineComment = new RegExp('--\[\[\n\W+\n\]\]');
+                            const lines: Set<String> = new Set<String>();
+                            for (let index = 0; index < 5; index++) {
+                                lines.add(codeline.find((v, i) => v != null && i === startLine - (i + 2)) as string);
+
+                                if (index > 0) {
+                                    let reverse = Array.from<String>(lines.values());
+                                    reverse = reverse.reverse();
+                                    const cmtToCheck = reverse.join();
+                                    if (multiLineComment.test(cmtToCheck)) {
+                                        commentRef = cmtToCheck;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            // match single line comment
+                            const singleLineComment = new RegExp('\n--\W*\n')
+                            if (singleLineComment.test(String(commentRef1))) {
+                                commentRef = String(commentRef1);
+                            }
+                        }
+
                         comment += String(commentRef).replace('\n', '').replace('\r', '').replace('\r\n', '');
+
                     } catch (error) {
 
                     }
