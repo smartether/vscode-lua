@@ -224,47 +224,41 @@ export class Analysis {
 
         let comment = '';
 
-        // if (node.type === 'FunctionDeclaration') {
-        //     const fun = node as luaparse.FunctionDeclaration;
-        //     const startLine = fun.loc.start.line;
-        //     let src = '';
-        //     src += luaparse.src.txt;
-        //     if (src == null || src === undefined) {
-        //         src = '';
-        //     }
+        if (node.type === 'FunctionDeclaration') {
+            const fun = node as luaparse.FunctionDeclaration;
+            const startLine = fun.loc.start.line;
+            if (this.lastSource != null) {
+                let src = this.lastSource;
 
-        //     const lines = src.split('\n');
-        //     const lines1 = src.split('\r\n');
-        //     const lines2 = src.split('/\r/\n');
-        //     let codeline = lines;
-        //     if (lines1.length > codeline.length) {
-        //         codeline = lines1;
-        //     }
-        //     if (lines2.length > codeline.length) {
-        //         codeline = lines2;
-        //     }
+                if (src == null || src === undefined) {
+                    src = '';
+                }
 
-        //     if (codeline != null) {
-        //         const commentRef = codeline.find((v, i) => v != null && i === startLine);
+                const lines = src.split('\n');
+                const lines1 = src.split('\r\n');
+                const lines2 = src.split('/\r/\n');
+                let codeline = lines;
+                if (lines1.length > codeline.length) {
+                    codeline = lines1;
+                }
+                if (lines2.length > codeline.length) {
+                    codeline = lines2;
+                }
 
-        //         try {
-        //             comment += commentRef;
-        //         } catch (error) {
+                if (codeline != null) {
+                    const commentRef = codeline.find((v, i) => v != null && i === startLine - 1);
 
-        //         }
-        //         try {
-        //             comment += src;
-        //         } catch (error) {
+                    try {
+                        comment += commentRef;
+                    } catch (error) {
 
-        //         }
-        //     }
-
-        // }
+                    }
+                }
+            }
+        }
 
         // comment += this.chunks.length.toString();
-        if (this.lastSource != null) {
-            comment = this.lastSource;
-        }
+
         this.symbols.push({
             kind,
             name,
