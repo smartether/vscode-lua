@@ -263,7 +263,10 @@ export class Analysis {
                                 }));
                                 linesList.push(line);
                                 if (index > 0) {
-                                    const reverse = linesList.reverse();
+                                    const newList: string[] = [];
+                                    linesList.forEach((v) => newList.push(v));
+
+                                    const reverse = newList.reverse();
                                     const cmtToCheck = reverse.join('');
                                     commentRef = cmtToCheck;
                                     if (multiLineComment.test(cmtToCheck)) {
