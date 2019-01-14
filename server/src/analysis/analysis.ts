@@ -256,13 +256,12 @@ export class Analysis {
                             commentRef = 'multilineCheck match.';
                             // match multi-line comment
                             const multiLineComment = /\-\-\[\[\n*.*\n*\]\]/g; // new RegExp('--\[\[\n\W+\n\]\]');
-                            const linesSet: Set<String> = new Set<String>();
+                            const linesList: string[] = new String[5];
                             for (let index = 0; index < 5; index++) {
-                                linesSet.add(codeline.find((v, i) => v != null && i === startLine - (i + 2)) as string);
-
+                                const line = String(codeline.find((v, i) => v != null && i === startLine - (index + 2)));
+                                linesList.push(line)
                                 if (index > 0) {
-                                    let reverse = Array.from<String>(linesSet.values());
-                                    reverse = reverse.reverse();
+                                    let reverse = linesList.reverse();
                                     const cmtToCheck = reverse.join('');
                                     if (multiLineComment.test(cmtToCheck)) {
                                         commentRef = cmtToCheck;
