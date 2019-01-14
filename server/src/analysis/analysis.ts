@@ -250,7 +250,7 @@ export class Analysis {
                     let commentRef = '';
                     try {
 
-                        const multiLineCheck = /\]\]\n/g; // new RegExp('\]\]\n');
+                        const multiLineCheck = /\]\]/g; // new RegExp('\]\]\n');
 
                         if (multiLineCheck.test(String(commentRef1))) {
                             // match multi-line comment
@@ -262,7 +262,7 @@ export class Analysis {
                                 if (index > 0) {
                                     let reverse = Array.from<String>(linesSet.values());
                                     reverse = reverse.reverse();
-                                    const cmtToCheck = reverse.join();
+                                    const cmtToCheck = reverse.join('');
                                     if (multiLineComment.test(cmtToCheck)) {
                                         commentRef = cmtToCheck;
                                         break;
