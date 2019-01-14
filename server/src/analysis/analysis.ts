@@ -256,7 +256,7 @@ export class Analysis {
                             commentRef = 'multilineCheck match.';
                             // match multi-line comment
                             const multiLineComment = /\-\-\[\[\n*.*\n*\]\]/g; // new RegExp('--\[\[\n\W+\n\]\]');
-                            const linesList: string[] = new String[5];
+                            const linesList: string[] = [];
                             for (let index = 0; index < 5; index++) {
                                 const line = String(codeline.find((v, i) => {
                                     return v != null && i === startLine - (index + 2);
