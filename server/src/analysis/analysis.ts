@@ -250,11 +250,11 @@ export class Analysis {
                     let commentRef = '';
                     try {
 
-                        const multiLineCheck = new RegExp('\]\]\n');
+                        const multiLineCheck = /^\]\]\n/g; // new RegExp('\]\]\n');
 
                         if (multiLineCheck.test(String(commentRef1))) {
                             // match multi-line comment
-                            const multiLineComment = new RegExp('--\[\[\n\W+\n\]\]');
+                            const multiLineComment = /--\[\[\n\W+\n\]\]/g; // new RegExp('--\[\[\n\W+\n\]\]');
                             const linesSet: Set<String> = new Set<String>();
                             for (let index = 0; index < 5; index++) {
                                 linesSet.add(codeline.find((v, i) => v != null && i === startLine - (i + 2)) as string);
@@ -272,7 +272,7 @@ export class Analysis {
                         }
                         else {
                             // match single line comment
-                            const singleLineComment = new RegExp('\n--\W*\n');
+                            const singleLineComment = /\n--\W*\n/g; // new RegExp('\n--\W*\n');
                             if (singleLineComment.test(String(commentRef1))) {
                                 commentRef = String(commentRef1);
                             }
