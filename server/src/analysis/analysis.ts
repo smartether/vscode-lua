@@ -244,9 +244,9 @@ export class Analysis {
                 }
 
                 if (codeline != null) {
-                    //neighbor line 1
+                    // neighbor line 1
                     const commentRef1 = codeline.find((v, i) => v != null && i === startLine - 2);
-                    //neighbor line 2
+                    // neighbor line 2
                     let commentRef = '';
                     try {
 
@@ -255,12 +255,12 @@ export class Analysis {
                         if (multiLineCheck.test(String(commentRef1))) {
                             // match multi-line comment
                             const multiLineComment = new RegExp('--\[\[\n\W+\n\]\]');
-                            const lines: Set<String> = new Set<String>();
+                            const linesSet: Set<String> = new Set<String>();
                             for (let index = 0; index < 5; index++) {
-                                lines.add(codeline.find((v, i) => v != null && i === startLine - (i + 2)) as string);
+                                linesSet.add(codeline.find((v, i) => v != null && i === startLine - (i + 2)) as string);
 
                                 if (index > 0) {
-                                    let reverse = Array.from<String>(lines.values());
+                                    let reverse = Array.from<String>(linesSet.values());
                                     reverse = reverse.reverse();
                                     const cmtToCheck = reverse.join();
                                     if (multiLineComment.test(cmtToCheck)) {
@@ -272,7 +272,7 @@ export class Analysis {
                         }
                         else {
                             // match single line comment
-                            const singleLineComment = new RegExp('\n--\W*\n')
+                            const singleLineComment = new RegExp('\n--\W*\n');
                             if (singleLineComment.test(String(commentRef1))) {
                                 commentRef = String(commentRef1);
                             }
