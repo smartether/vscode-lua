@@ -11,6 +11,7 @@ export class Analysis {
     private globalScope: Scope | null = null;
     private cursorScope: Scope | null = null;
     private completionTableName: string | null = null;
+    private lastSource: string | null = null;
 
     public constructor() {
         luaparse.parse({
@@ -73,6 +74,7 @@ export class Analysis {
     }
 
     public end(text: string) {
+        this.lastSource = text;
         luaparse.end(text);
     }
 
@@ -260,8 +262,8 @@ export class Analysis {
         // }
 
         // comment += this.chunks.length.toString();
-        if (luaparse.defaultOptions != null && luaparse.defaultOptions.src != null) {
-            comment += luaparse.defaultOptions.src;
+        if (this.lastSource != null) {
+            comment = this.lastSource;
         }
         this.symbols.push({
             kind,
