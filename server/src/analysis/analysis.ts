@@ -265,6 +265,7 @@ export class Analysis {
                                 if (index > 0) {
                                     const reverse = linesList.reverse();
                                     const cmtToCheck = reverse.join('');
+                                    commentRef = cmtToCheck;
                                     if (multiLineComment.test(cmtToCheck)) {
                                         commentRef = cmtToCheck;
                                         break;
