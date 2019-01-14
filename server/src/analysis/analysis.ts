@@ -253,6 +253,7 @@ export class Analysis {
                         const multiLineCheck = /\]\]/g; // new RegExp('\]\]\n');
 
                         if (multiLineCheck.test(String(commentRef1))) {
+                            commentRef = 'multilineCheck match.';
                             // match multi-line comment
                             const multiLineComment = /--\[\[\W+\]\]/g; // new RegExp('--\[\[\n\W+\n\]\]');
                             const linesSet: Set<String> = new Set<String>();
@@ -274,6 +275,7 @@ export class Analysis {
                             // match single line comment
                             const singleLineComment = /--\W*/g; // new RegExp('\n--\W*\n');
                             if (singleLineComment.test(String(commentRef1))) {
+                                commentRef = 'singleLineCheck match.';
                                 commentRef = String(commentRef1);
                             }
                         }
