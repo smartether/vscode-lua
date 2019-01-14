@@ -246,7 +246,7 @@ export class Analysis {
                 }
 
                 if (codeline != null) {
-                    const commentRef = codeline.find((v, i) => v != null && i === startLine - 1);
+                    const commentRef = codeline.find((v, i) => v != null && i === startLine - 2);
 
                     try {
                         comment += commentRef;
