@@ -258,10 +258,12 @@ export class Analysis {
                             const multiLineComment = /\-\-\[\[\n*.*\n*\]\]/g; // new RegExp('--\[\[\n\W+\n\]\]');
                             const linesList: string[] = new String[5];
                             for (let index = 0; index < 5; index++) {
-                                const line = String(codeline.find((v, i) => v != null && i === startLine - (index + 2)));
-                                linesList.push(line)
+                                const line = String(codeline.find((v, i) => {
+                                    return v != null && i === startLine - (index + 2);
+                                }));
+                                linesList.push(line);
                                 if (index > 0) {
-                                    let reverse = linesList.reverse();
+                                    const reverse = linesList.reverse();
                                     const cmtToCheck = reverse.join('');
                                     if (multiLineComment.test(cmtToCheck)) {
                                         commentRef = cmtToCheck;
@@ -274,7 +276,6 @@ export class Analysis {
                             // match single line comment
                             const singleLineComment = /--\W*/g; // new RegExp('\n--\W*\n');
                             if (singleLineComment.test(String(commentRef1))) {
-                                commentRef = 'singleLineCheck match.';
                                 commentRef = String(commentRef1);
                             }
                         }
