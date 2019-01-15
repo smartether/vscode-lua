@@ -273,6 +273,10 @@ export class Analysis {
                                         commentRef = cmtToCheck;
                                         break;
                                     }
+                                    if (commentRef.includes('--[[')) {
+                                        const splited = commentRef.split('--[[');
+                                        commentRef = splited[1];
+                                    }
                                 }
                             }
                         }
